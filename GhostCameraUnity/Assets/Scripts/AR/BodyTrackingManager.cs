@@ -7,7 +7,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System.Collections.Generic;
 
-public class BodyTrackingController : MonoBehaviour
+public class BodyTrackingManager : MonoBehaviour
 {
     [SerializeField]
     private ARHumanBodyManager bodyManager;

@@ -53,6 +53,7 @@ public class BodyTrackingManager : MonoBehaviour
         // API 버전에 따라 joints 컬렉션 접근 방법이 다를 수 있으므로, 실제 사용 중인 기능에 맞게 수정하세요.
         if (humanBody.joints.IsCreated && humanBody.joints.Length > 0) // ✅ 'Length'를 사용해야 함
         {
+
             XRHumanBodyJoint leftShoulder;
             XRHumanBodyJoint rightShoulder;
 
@@ -99,7 +100,20 @@ public class BodyTrackingManager : MonoBehaviour
 // 단순 예시용 enum (실제 ARFoundation에서 제공하는 관절 ID를 사용하세요)
 public enum HumanBodyJointType
 {
-    LeftShoulder,
-    RightShoulder,
-    // 필요한 경우 다른 관절도 추가할 수 있습니다.
+    Head = 0,
+    Neck = 1,
+    Spine = 2,
+    Hips = 3,
+    LeftHip = 4,
+    RightHip = 5,
+    LeftKnee = 6,
+    RightKnee = 7,
+    LeftFoot = 8,
+    RightFoot = 9,
+    LeftShoulder = 11,
+    RightShoulder = 12,
+    LeftElbow = 13,
+    RightElbow = 14,
+    LeftHand = 15,
+    RightHand = 16
 }

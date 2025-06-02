@@ -46,35 +46,23 @@ public class BodyTrackingManager : MonoBehaviour
         }
     }
 
-
     void ProcessBody(ARHumanBody humanBody)
     {
-        // 여기서 humanBody의 관절 (예: 왼쪽/오른쪽 어깨)을 추출합니다.
-        // API 버전에 따라 joints 컬렉션 접근 방법이 다를 수 있으므로, 실제 사용 중인 기능에 맞게 수정하세요.
-        if (humanBody.joints.IsCreated && humanBody.joints.Length > 0) // ✅ 'Length'를 사용해야 함
+        if (humanBody.joints.IsCreated && humanBody.joints.Length > 0)
         {
-
             XRHumanBodyJoint leftShoulder;
-            XRHumanBodyJoint rightShoulder;
 
-            if (TryGetJoint(humanBody, HumanBodyJointType.LeftShoulder, out leftShoulder) &&
-                TryGetJoint(humanBody, HumanBodyJointType.RightShoulder, out rightShoulder))
+            if (TryGetJoint(humanBody, HumanBodyJointType.LeftShoulder, out leftShoulder))
             {
-                // 인체 추적 데이터는 인체 로컬 좌표로 제공됩니다.
-                // 이를 월드 좌표로 변환해줘야 정확한 위치 계산이 가능해요.
-                Vector3 leftPos = humanBody.transform.TransformPoint(leftShoulder.anchorPose.position);
-                Vector3 rightPos = humanBody.transform.TransformPoint(rightShoulder.anchorPose.position);
-
-                // 두 어깨의 중간 위치 계산 (예: 귀신 모델 배치를 위한 기준점)
-                Vector3 midPoint = (leftPos + rightPos) * 0.5f;
-
+                
+                Vector3 leftShoulderPos = humanBody.transform.TransformPoint(leftShoulder.anchorPose.position);
                 if (spawnedGhost == null)
                 {
-                    spawnedGhost = Instantiate(ghostPrefab, midPoint, Quaternion.identity);
+                    spawnedGhost = Instantiate(ghostPrefab, leftShoulderPos, Quaternion.identity);
                 }
                 else
                 {
-                    spawnedGhost.transform.position = midPoint;
+                    spawnedGhost.transform.position = leftShoulderPos; // 💡 즉시 위치 업데이트 추가!
                 }
             }
         }
